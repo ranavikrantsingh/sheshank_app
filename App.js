@@ -6,12 +6,14 @@ import {
   View,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  ActivityIndicator,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {scale} from './src/utils/Scaling';
 import {toastr} from './src/utils/Toastr';
 import Colors from './src/constants/Colors';
 const App = () => {
+  const [image, setimage] = useState('https://picsum.photos/200/300');
   const handleButtonPressed = () => {
     toastr.showToast('ButtonPressed');
   };
@@ -21,10 +23,15 @@ const App = () => {
         <Text style={{fontSize: scale(20), color: Colors?.red}}>
           Hello World
         </Text>
-        <Image
-          source={{uri: 'https://picsum.photos/200/300'}}
-          style={{width: scale(200), height: scale(300)}}
-        />
+        {image ? (
+          <Image
+            source={{uri: image}}
+            style={{width: scale(200), height: scale(300),marginVertical:scale(10)}}
+          />
+        ) : (
+          <ActivityIndicator color={Colors.red} animating={true} size={20} />
+        )}
+
         <TouchableOpacity onPress={() => toastr.showToast('ButtonPressed')}>
           <View style={styles?.buttonStyle}>
             <Text style={{fontSize: scale(20)}}>Hello World</Text>
