@@ -18,7 +18,7 @@ const App = () => {
   return (
     <SafeAreaView style={styles?.body}>
       <View style={{marginHorizontal: scale(20)}}>
-        <Text style={{fontSize: scale(20), Color: Colors?.red}}>
+        <Text style={{fontSize: scale(20), color: Colors?.red}}>
           Hello World
         </Text>
         <Image
