@@ -10,6 +10,7 @@ import {
 import React from 'react';
 import {scale} from './src/utils/Scaling';
 import {toastr} from './src/utils/Toastr';
+import Colors from './src/constants/Colors';
 const App = () => {
   const handleButtonPressed = () => {
     toastr.showToast('ButtonPressed');
@@ -17,7 +18,9 @@ const App = () => {
   return (
     <SafeAreaView style={styles?.body}>
       <View style={{marginHorizontal: scale(20)}}>
-        <Text style={{fontSize: scale(20)}}>Hello World</Text>
+        <Text style={{fontSize: scale(20), Color: Colors?.red}}>
+          Hello World
+        </Text>
         <Image
           source={{uri: 'https://picsum.photos/200/300'}}
           style={{width: scale(200), height: scale(300)}}
