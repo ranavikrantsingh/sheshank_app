@@ -1,34 +1,14 @@
-import {Alert, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {scale} from '../utils/Scaling';
-import ButtonComponent from '../components/ButtonComponent';
-import {logout} from '../store/actions';
-import {useDispatch} from 'react-redux';
+
 import CustomDarkModeContainerWithKeyboardAvoiding from '../components/CustomDarkModeContainerWithKeyboardAvoiding';
 const HomeScreen = props => {
-  const dispatch = useDispatch();
-
-  const handleLogout = () => {
-    Alert.alert(
-      'Logout',
-      'Are you sure you want to logout?',
-      [
-        {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {text: 'OK', onPress: () => dispatch(logout())},
-      ],
-      {cancelable: false},
-    );
-  };
   return (
     <CustomDarkModeContainerWithKeyboardAvoiding>
       <View style={styles?.margins}>
         <View style={styles?.body}>
           <Text style={styles.boldText}>Home Screen</Text>
-          <ButtonComponent name="Logout" onPress={handleLogout} />
         </View>
       </View>
     </CustomDarkModeContainerWithKeyboardAvoiding>

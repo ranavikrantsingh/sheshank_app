@@ -2,6 +2,8 @@ import * as React from 'react';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import Colors from '../constants/Colors';
 import HomeScreen from '../screens/HomeScreen';
+import CustomDrawerComponent from './components/CustomDrawerComponent';
+
 const Drawer = createDrawerNavigator();
 
 export default function DrawerNavigator() {
@@ -12,13 +14,12 @@ export default function DrawerNavigator() {
   return (
     <>
       <Drawer.Navigator
-        initialRouteName="Home"
+        drawerContent={props => <CustomDrawerComponent {...props} />}
         screenOptions={{
           headerShadowVisible: false,
           headerShown: false,
           drawerLabelStyle: {
-            fontSize: 16,
-            fontWeight: 'bold',
+            fontFamily: 'honc-Medium',
           },
           drawerStyle: {
             backgroundColor: '#2A2E39',
