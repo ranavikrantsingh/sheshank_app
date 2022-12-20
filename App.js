@@ -1,5 +1,5 @@
 import React from 'react';
-import Routes from './src/routes/Routes';
+import Root from './src/routes/Root';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {store, persistor} from './src/store/appStore';
@@ -9,7 +9,7 @@ const App = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <GestureHandlerRootView style={{flex: 1}}>
-          <Routes />
+          <Root />
         </GestureHandlerRootView>
       </PersistGate>
     </Provider>

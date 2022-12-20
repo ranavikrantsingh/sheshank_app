@@ -4,7 +4,10 @@ import {TextInput} from 'react-native-paper';
 import ButtonComponent from '../components/ButtonComponent.js';
 import {scale} from '../utils/Scaling.js';
 import {toastr} from '../utils/Toastr.js';
+import { setIsAuthenticated } from '../store/actions.js';
+import { useDispatch } from 'react-redux';
 const OtpScreen = (props) => {
+  const dispatch = useDispatch();
   const {mobile} = props.route.params;
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
@@ -36,7 +39,8 @@ const OtpScreen = (props) => {
     };
     let isValid = handleValidationforOtp(data);
     if (isValid.isValid) {
-      props.navigation.navigate('HomeScreen');
+      dispatch(setIsAuthenticated(true));
+
     } else {
       toastr.showToast('Please enter valid OTP');
     }
