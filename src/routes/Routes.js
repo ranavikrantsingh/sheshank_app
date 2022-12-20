@@ -7,6 +7,7 @@ import {
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {useColorScheme} from 'react-native';
 import TabNavigator from './TabNavigator';
+import MailDetailsScreen from '../screens/MailDetailsScreen';
 const Stack = createNativeStackNavigator();
 
 export default function Routes() {
@@ -17,6 +18,11 @@ export default function Routes() {
         <Stack.Screen
           name="HomeScreen"
           component={TabNavigator}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="MailDetailsScreen"
+          component={MailDetailsScreen}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

@@ -8,6 +8,7 @@ import {
   Keyboard,
   Text,
   TouchableWithoutFeedback,
+  TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
 import {scale} from '../utils/Scaling';
@@ -26,6 +27,13 @@ const HomeScreen = props => {
 
   // const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
 
+  const handleNavigation = item => {
+    const data = {
+      data: item,
+    };
+
+    props.navigation.navigate('MailDetailsScreen', data);
+  };
   return (
     <SafeAreaView
       style={[
@@ -75,25 +83,27 @@ const HomeScreen = props => {
             <FlatList
               data={mail}
               renderItem={({item}) => (
-                <View style={styles?.card}>
-                  <View style={styles?.row}>
-                    <View
-                      style={[
-                        styles?.contactContainer,
-                        {backgroundColor: randomColorgenerator},
-                      ]}>
-                      <Text style={styles?.whiteText}>
-                        {item?.name?.slice(0, 1)}
-                      </Text>
-                    </View>
-                    <View style={styles?.col}>
-                      <Text style={styles?.boldText}>{item?.name}</Text>
-                      <Text style={styles?.mediumText} numberOfLines={2}>
-                        {item?.message}
-                      </Text>
+                <TouchableOpacity onPress={() => handleNavigation(item)}>
+                  <View style={styles?.card}>
+                    <View style={styles?.row}>
+                      <View
+                        style={[
+                          styles?.contactContainer,
+                          {backgroundColor: randomColorgenerator},
+                        ]}>
+                        <Text style={styles?.whiteText}>
+                          {item?.name?.slice(0, 1)}
+                        </Text>
+                      </View>
+                      <View style={styles?.col}>
+                        <Text style={styles?.boldText}>{item?.name}</Text>
+                        <Text style={styles?.mediumText} numberOfLines={2}>
+                          {item?.message}
+                        </Text>
+                      </View>
                     </View>
                   </View>
-                </View>
+                </TouchableOpacity>
               )}
               onEndReachedThreshold={0.5}
               keyExtractor={item => item?.name}
