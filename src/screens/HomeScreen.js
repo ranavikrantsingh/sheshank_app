@@ -1,17 +1,62 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  useColorScheme,
+  View,
+  Text,
+} from 'react-native';
+import React, {useState} from 'react';
 import {scale} from '../utils/Scaling';
-
-import CustomDarkModeContainerWithKeyboardAvoiding from '../components/CustomDarkModeContainerWithKeyboardAvoiding';
+import Countries from '../constants/Countries';
+import {TextInput} from 'react-native-paper';
 const HomeScreen = props => {
+  const isDarkMode = useColorScheme() === 'dark';
+  const [mail, setMail] = useState(Countries);
   return (
-    <CustomDarkModeContainerWithKeyboardAvoiding>
+    <SafeAreaView
+      style={[
+        styles?.mainContainer,
+        {backgroundColor: isDarkMode ? '#121212' : '#fff'},
+      ]}>
       <View style={styles?.margins}>
-        <View style={styles?.body}>
-          <Text style={styles.boldText}>Home Screen</Text>
+        <View>
+          <TextInput
+            left={
+              <TextInput.Icon
+                name="magnify"
+                onPress={() => props.navigation.toggleDrawer()}
+              />
+            }
+            style={{backgroundColor: 'transparent'}}
+            label="Search"
+            mode="outlined"
+            onChangeText={text => {
+              setMail(
+                Countries.filter(item => {
+                  return item?.name
+                    ?.toLowerCase()
+                    .includes(text?.toLowerCase());
+                }),
+              );
+            }}
+          />
         </View>
+        <FlatList
+          data={mail}
+          renderItem={({item}) => (
+            <View style={styles?.card}>
+              <Text style={styles?.mediumText}>{item?.name}</Text>
+            </View>
+          )}
+          onEndReachedThreshold={0.5}
+          keyExtractor={item => item?.name}
+          onEndReached={() => {
+            console.log('end reached');
+          }}
+        />
       </View>
-    </CustomDarkModeContainerWithKeyboardAvoiding>
+    </SafeAreaView>
   );
 };
 
@@ -23,7 +68,6 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    backgroundColor: '#fff',
   },
   body: {
     marginTop: '40%',

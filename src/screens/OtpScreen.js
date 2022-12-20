@@ -67,6 +67,7 @@ const OtpScreen = props => {
             keyboardType="number-pad"
             value={otp}
             maxLength={6}
+            style={{backgroundColor: 'transparent'}}
             onChangeText={text => {
               setOtp(text);
               setError('');

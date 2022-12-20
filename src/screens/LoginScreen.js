@@ -69,6 +69,7 @@ const LoginScreen = props => {
           <TextInput
             placeholder="Enter your mobile number"
             mode="outlined"
+            style={{backgroundColor: 'transparent'}}
             keyboardType="number-pad"
             value={mobile}
             maxLength={10}

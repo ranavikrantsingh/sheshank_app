@@ -52,36 +52,36 @@ const CreateAccount = () => {
     };
   };
 
-// Regex for email validation
-// const handleValidationforLogin = data => {
-//     const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-//         let formIsValid = true;
-//         if (!data?.firstName) {
-//           formIsValid = false;
-//           setError('First Name is Required');
-//           sethasFirstNameError(true);
-//         }
-//         if (!data?.lastName) {
-//           formIsValid = false;
-//           setError('Last Name is Required');
-//           sethasLastNameError(true);
-//         }
-//         if (!data?.email) {
-//             formIsValid = false;
-//             setError('Email is Required');
-//             sethasEmailError(true);
-//             }
-//         if (typeof data.email !== 'undefined') {
-//             if (!data.email.match(regexEmail)) {
-//                 formIsValid = false;
-//                 setError('Email is Required');
-//                 sethasEmailError(true);
-//             }
-//         }
-//         return {
-//           isValid: formIsValid,
-//         };
-//       };
+  // Regex for email validation
+  // const handleValidationforLogin = data => {
+  //     const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  //         let formIsValid = true;
+  //         if (!data?.firstName) {
+  //           formIsValid = false;
+  //           setError('First Name is Required');
+  //           sethasFirstNameError(true);
+  //         }
+  //         if (!data?.lastName) {
+  //           formIsValid = false;
+  //           setError('Last Name is Required');
+  //           sethasLastNameError(true);
+  //         }
+  //         if (!data?.email) {
+  //             formIsValid = false;
+  //             setError('Email is Required');
+  //             sethasEmailError(true);
+  //             }
+  //         if (typeof data.email !== 'undefined') {
+  //             if (!data.email.match(regexEmail)) {
+  //                 formIsValid = false;
+  //                 setError('Email is Required');
+  //                 sethasEmailError(true);
+  //             }
+  //         }
+  //         return {
+  //           isValid: formIsValid,
+  //         };
+  //       };
   const handleCreateAccount = () => {
     let data = {
       firstName,
@@ -223,5 +223,6 @@ const styles = StyleSheet.create({
   },
   input: {
     marginVertical: scale(10),
+    backgroundColor: 'transparent',
   },
 });
