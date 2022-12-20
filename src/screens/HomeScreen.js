@@ -4,58 +4,67 @@ import {
   StyleSheet,
   useColorScheme,
   View,
+  KeyboardAvoidingView,
+  Keyboard,
   Text,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import React, {useState} from 'react';
 import {scale} from '../utils/Scaling';
-import Countries from '../constants/Countries';
+import MailData from '../constants/MailData';
 import {TextInput} from 'react-native-paper';
 const HomeScreen = props => {
   const isDarkMode = useColorScheme() === 'dark';
-  const [mail, setMail] = useState(Countries);
+  const [mail, setMail] = useState(MailData);
   return (
     <SafeAreaView
       style={[
         styles?.mainContainer,
         {backgroundColor: isDarkMode ? '#121212' : '#fff'},
       ]}>
-      <View style={styles?.margins}>
-        <View>
-          <TextInput
-            left={
-              <TextInput.Icon
-                name="magnify"
-                onPress={() => props.navigation.toggleDrawer()}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            Keyboard.dismiss();
+          }}>
+          <View style={styles?.margins}>
+            <View>
+              <TextInput
+                left={
+                  <TextInput.Icon
+                    name="magnify"
+                    onPress={() => props.navigation.toggleDrawer()}
+                  />
+                }
+                style={{backgroundColor: 'transparent'}}
+                label="Search by email"
+                mode="outlined"
+                onChangeText={text => {
+                  const filteredMail = MailData.filter(item => {
+                    return item?.email?.includes(text);
+                  });
+                  setMail(filteredMail);
+                }}
               />
-            }
-            style={{backgroundColor: 'transparent'}}
-            label="Search"
-            mode="outlined"
-            onChangeText={text => {
-              setMail(
-                Countries.filter(item => {
-                  return item?.name
-                    ?.toLowerCase()
-                    .includes(text?.toLowerCase());
-                }),
-              );
-            }}
-          />
-        </View>
-        <FlatList
-          data={mail}
-          renderItem={({item}) => (
-            <View style={styles?.card}>
-              <Text style={styles?.mediumText}>{item?.name}</Text>
             </View>
-          )}
-          onEndReachedThreshold={0.5}
-          keyExtractor={item => item?.name}
-          onEndReached={() => {
-            console.log('end reached');
-          }}
-        />
-      </View>
+            <FlatList
+              data={mail}
+              renderItem={({item}) => (
+                <View style={styles?.card}>
+                  <Text style={styles?.mediumText}>{item?.username}</Text>
+                  <Text style={styles?.mediumText}>{item?.email}</Text>
+                </View>
+              )}
+              onEndReachedThreshold={0.5}
+              keyExtractor={item => item?.name}
+              onEndReached={() => {
+                console.log('end reached');
+              }}
+            />
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
