@@ -1,11 +1,27 @@
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { Alert, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { scale } from '../utils/Scaling'
 import ButtonComponent from '../components/ButtonComponent'
 import { logout } from '../store/actions'
 import { useDispatch } from 'react-redux'
 const HomeScreen = (props) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+   Alert.alert(
+      'Logout',
+      'Are you sure you want to logout?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        { text: 'OK', onPress: () => dispatch(logout()) },
+      ],
+      { cancelable: false }
+    );
+  }
   return (
     <SafeAreaView style={styles?.mainContainer}>
       <View style={styles?.margins}>
@@ -13,9 +29,7 @@ const HomeScreen = (props) => {
           <Text style={styles.boldText}>Home Screen</Text>
           <ButtonComponent
             name="Logout"
-            onPress={() => {
-            dispatch(logout())
-            }}
+            onPress={handleLogout}
             
           />
         </View>
