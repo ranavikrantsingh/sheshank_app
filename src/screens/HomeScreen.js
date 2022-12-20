@@ -87,7 +87,7 @@ const HomeScreen = props => {
                       </Text>
                     </View>
                     <View style={styles?.col}>
-                      <Text style={styles?.boldText}>{item?.email}</Text>
+                      <Text style={styles?.boldText}>{item?.name}</Text>
                       <Text style={styles?.mediumText} numberOfLines={2}>
                         {item?.message}
                       </Text>
