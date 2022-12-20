@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginScreen from '../screens/LoginScreen';
 import OtpScreen from '../screens/OtpScreen';
+import CreateAccount from '../screens/CreateAccount';
 const Stack = createNativeStackNavigator();
 
 export default function LoginRoutes() {
@@ -17,7 +18,12 @@ export default function LoginRoutes() {
         <Stack.Screen
           name="OtpScreen"
           component={OtpScreen}
-          options={{title: 'OtpScreen'}}
+          options={{title: 'Login'}}
+        />
+        <Stack.Screen
+          name="CreateAccount"
+          component={CreateAccount}
+          options={{title: 'Sign Up'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

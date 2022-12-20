@@ -97,6 +97,22 @@ const LoginScreen = props => {
             }}>
             <ButtonComponent onPress={handleLogin} name={'Login'} />
           </View>
+          <View
+            style={{
+              marginTop: scale(20),
+            }}>
+            <ButtonComponent
+              onPress={() => {
+                props.navigation.navigate({
+                  name: 'CreateAccount',
+                });
+              }
+              }
+              name={'Sign Up'}
+              buttonStyle={styles?.signUpButton}
+              textStyle={styles?.singupButtonText}
+            />
+          </View>
         </View>
       </View>
     </SafeAreaView>
@@ -130,5 +146,13 @@ const styles = StyleSheet.create({
     fontSize: scale(13),
     fontWeight: 'normal',
     marginVertical: scale(2),
+  },
+  signUpButton: {
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#000',
+  },
+  singupButtonText: {
+    color: '#000',
   },
 });
