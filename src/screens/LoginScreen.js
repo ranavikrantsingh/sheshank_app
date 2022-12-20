@@ -1,12 +1,4 @@
-import {
-  StyleSheet,
-  View,
-  Text,
-  SafeAreaView,
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-} from 'react-native';
+import {StyleSheet, View, Text, useColorScheme, Platform} from 'react-native';
 import React, {useState} from 'react';
 import {TextInput} from 'react-native-paper';
 import ButtonComponent from '../components/ButtonComponent.js';
@@ -14,9 +6,10 @@ import {scale} from '../utils/Scaling.js';
 import {useDispatch} from 'react-redux';
 import {setMobileNumber} from '../store/actions';
 import {toastr} from '../utils/Toastr.js';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-
+import CustomDarkModeContainerWithKeyboardAvoiding from '../components/CustomDarkModeContainerWithKeyboardAvoiding.js';
 const LoginScreen = props => {
+  const isDarkMode = useColorScheme() === 'dark';
+
   const dispatch = useDispatch();
   const [mobile, setMobile] = useState('');
   const [error, setError] = useState('');
@@ -59,79 +52,80 @@ const LoginScreen = props => {
   };
 
   return (
-    <SafeAreaView style={styles?.mainContainer}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            Keyboard.dismiss();
-          }}>
-          <View style={styles?.margins}>
-            <View style={styles?.body}>
-              <Text style={styles.boldText}>Welcome to the app</Text>
-              <Text style={styles.mediumText}>Enter your mobile number</Text>
-              <TextInput
-                placeholder="Enter your mobile number"
-                mode="outlined"
-                keyboardType="number-pad"
-                value={mobile}
-                maxLength={10}
-                error={hasMobileError}
-                onChangeText={text => {
-                  setMobile(text);
-                  if (text?.length === 10) {
-                    sethasMobileError(false);
-                    setError('');
-                  }
-                }}
-                onBlur={() => {
-                  if (mobile?.length === 10) {
-                    sethasMobileError(false);
-                    return true;
-                  } else {
-                    sethasMobileError(true);
-                    setError('Mobile Number is Required');
-                    return false;
-                  }
-                }}
-                onSubmitEditing={() => {
-                  if (mobile?.length === 10) {
-                    sethasMobileError(false);
-                    return true;
-                  } else {
-                    sethasMobileError(true);
-                    setError('Mobile Number is Required');
-                    return false;
-                  }
-                }}
-              />
-              {hasMobileError && <Text style={styles?.error}>{error}</Text>}
-              <View
-                style={{
-                  marginTop: scale(20),
-                }}>
-                <ButtonComponent onPress={handleLogin} name={'Login'} />
-              </View>
-              <View
-                style={{
-                  marginTop: scale(20),
-                }}>
-                <ButtonComponent
-                  onPress={() => {
-                    props.navigation.navigate({
-                      name: 'CreateAccount',
-                    });
-                  }}
-                  name={'Sign Up'}
-                  buttonStyle={styles?.signUpButton}
-                  textStyle={styles?.singupButtonText}
-                />
-              </View>
-            </View>
+    <CustomDarkModeContainerWithKeyboardAvoiding>
+      <View style={styles?.margins}>
+        <View style={styles?.body}>
+          <Text
+            style={[styles.boldText, {color: isDarkMode ? '#f2f2f2' : '#000'}]}>
+            Welcome to the app
+          </Text>
+          <Text
+            style={[
+              styles.mediumText,
+              {color: isDarkMode ? '#f2f2f2' : '#6d6d6d'},
+            ]}>
+            Enter your mobile number
+          </Text>
+          <TextInput
+            placeholder="Enter your mobile number"
+            mode="outlined"
+            keyboardType="number-pad"
+            value={mobile}
+            maxLength={10}
+            error={hasMobileError}
+            onChangeText={text => {
+              setMobile(text);
+              if (text?.length === 10) {
+                sethasMobileError(false);
+                setError('');
+              }
+            }}
+            onBlur={() => {
+              if (mobile?.length === 10) {
+                sethasMobileError(false);
+                return true;
+              } else {
+                sethasMobileError(true);
+                setError('Mobile Number is Required');
+                return false;
+              }
+            }}
+            onSubmitEditing={() => {
+              if (mobile?.length === 10) {
+                sethasMobileError(false);
+                return true;
+              } else {
+                sethasMobileError(true);
+                setError('Mobile Number is Required');
+                return false;
+              }
+            }}
+          />
+          {hasMobileError && <Text style={styles?.error}>{error}</Text>}
+          <View
+            style={{
+              marginTop: scale(20),
+            }}>
+            <ButtonComponent onPress={handleLogin} name={'Login'} />
           </View>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+          <View
+            style={{
+              marginTop: scale(20),
+            }}>
+            <ButtonComponent
+              onPress={() => {
+                props.navigation.navigate({
+                  name: 'CreateAccount',
+                });
+              }}
+              name={'Sign Up'}
+              buttonStyle={styles?.signUpButton}
+              textStyle={styles?.singupButtonText}
+            />
+          </View>
+        </View>
+      </View>
+    </CustomDarkModeContainerWithKeyboardAvoiding>
   );
 };
 
@@ -143,7 +137,6 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    backgroundColor: '#fff',
   },
   body: {
     marginTop: '40%',

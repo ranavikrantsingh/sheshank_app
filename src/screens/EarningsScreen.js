@@ -1,11 +1,14 @@
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import CustomDarkModeContainerWithKeyboardAvoiding from '../components/CustomDarkModeContainerWithKeyboardAvoiding';
 
 const EarningsScreen = () => {
   return (
-    <SafeAreaView>
-      <Text>EarningsScreen</Text>
-    </SafeAreaView>
+   <CustomDarkModeContainerWithKeyboardAvoiding>
+      <View>
+        <Text>Earnings Screen</Text>
+      </View>
+   </CustomDarkModeContainerWithKeyboardAvoiding>
   );
 };
 

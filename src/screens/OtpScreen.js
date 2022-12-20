@@ -1,19 +1,23 @@
-import {StyleSheet, Text, SafeAreaView,View} from 'react-native';
+import {StyleSheet, Text, useColorScheme, View} from 'react-native';
 import React, {useState} from 'react';
 import {TextInput} from 'react-native-paper';
 import ButtonComponent from '../components/ButtonComponent.js';
 import {scale} from '../utils/Scaling.js';
 import {toastr} from '../utils/Toastr.js';
-import { setIsAuthenticated } from '../store/actions.js';
-import { useDispatch } from 'react-redux';
-const OtpScreen = (props) => {
+import {setIsAuthenticated} from '../store/actions.js';
+
+import {useDispatch} from 'react-redux';
+import CustomDarkModeContainerWithKeyboardAvoiding from '../components/CustomDarkModeContainerWithKeyboardAvoiding.js';
+const OtpScreen = props => {
+  const isDarkMode = useColorScheme() === 'dark';
   const dispatch = useDispatch();
   const {mobile} = props.route.params;
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
   const [hasOtpError, sethasOtpError] = useState(false);
+  var replaced = mobile.replace(/^(.{2}).*(.{3}).*(.{4})$/, `$1****$3`);
 
-  const handleValidationforOtp = (data) => {  
+  const handleValidationforOtp = data => {
     let formIsValid = true;
     if (!data?.otp) {
       formIsValid = false;
@@ -40,27 +44,30 @@ const OtpScreen = (props) => {
     let isValid = handleValidationforOtp(data);
     if (isValid.isValid) {
       dispatch(setIsAuthenticated(true));
-
     } else {
       toastr.showToast('Please enter valid OTP');
     }
   };
 
-  
-
   return (
-    <SafeAreaView style={styles?.mainContainer}>
+    <CustomDarkModeContainerWithKeyboardAvoiding>
       <View style={styles?.margins}>
         <View style={styles?.body}>
-          <Text style={styles.boldText}>Enter OTP</Text>
-          <Text style={styles.mediumText}>Enter the OTP sent to your mobile {mobile}</Text>
+          <Text
+            style={[styles.boldText, {color: isDarkMode ? '#fff' : '#000'}]}>
+            Enter OTP
+          </Text>
+          <Text
+            style={[styles.mediumText, {color: isDarkMode ? '#fff' : '#000'}]}>
+            Enter the OTP sent to your mobile {replaced}
+          </Text>
           <TextInput
             placeholder="Enter OTP"
             mode="outlined"
             keyboardType="number-pad"
             value={otp}
             maxLength={6}
-            onChangeText={(text) => {
+            onChangeText={text => {
               setOtp(text);
               setError('');
               sethasOtpError(false);
@@ -68,13 +75,10 @@ const OtpScreen = (props) => {
             error={hasOtpError}
           />
           <Text style={styles.error}>{error}</Text>
-          <ButtonComponent
-            name="Verify"
-            onPress={handleOtp}
-          />
+          <ButtonComponent name="Verify" onPress={handleOtp} />
         </View>
       </View>
-    </SafeAreaView>
+    </CustomDarkModeContainerWithKeyboardAvoiding>
   );
 };
 

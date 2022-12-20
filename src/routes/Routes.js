@@ -1,14 +1,18 @@
 import * as React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  DarkTheme,
+  DefaultTheme,
+} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import LoginScreen from '../screens/LoginScreen';
-import OtpScreen from '../screens/OtpScreen';
+import {useColorScheme} from 'react-native';
 import TabNavigator from './TabNavigator';
 const Stack = createNativeStackNavigator();
 
 export default function Routes() {
+  const isDarkMode = useColorScheme() === 'dark';
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={isDarkMode ? DarkTheme : DefaultTheme}>
       <Stack.Navigator initialRouteName="HomeScreen">
         <Stack.Screen
           name="HomeScreen"

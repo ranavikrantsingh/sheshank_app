@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import {scale} from '../utils/Scaling';
 import ButtonComponent from '../components/ButtonComponent';
 import {TextInput} from 'react-native-paper';
+import CustomDarkModeContainerWithKeyboardAvoiding from '../components/CustomDarkModeContainerWithKeyboardAvoiding';
 const CreateAccount = () => {
   const [firstName, setFirstName] = useState('');
   const [hasFirstNameError, sethasFirstNameError] = useState(false);
@@ -96,7 +97,7 @@ const CreateAccount = () => {
   };
 
   return (
-    <SafeAreaView style={styles?.mainContainer}>
+    <CustomDarkModeContainerWithKeyboardAvoiding>
       <View style={styles?.margins}>
         <ScrollView>
           <TextInput
@@ -198,7 +199,7 @@ const CreateAccount = () => {
           name={'Create Account'}
         />
       </View>
-    </SafeAreaView>
+    </CustomDarkModeContainerWithKeyboardAvoiding>
   );
 };
 
