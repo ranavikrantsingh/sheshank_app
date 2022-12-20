@@ -11,8 +11,7 @@ const TabNavigator = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
-          backgroundColor: '#000',
-          borderTopWidth: 0,
+          // borderTopWidth: 0,
           height: Platform.OS === 'ios' ? scale(80) : scale(60),
         },
         tabBarLabelStyle: {
@@ -20,9 +19,7 @@ const TabNavigator = () => {
           bottom: Platform.OS === 'ios' ? scale(-2) : scale(5),
         },
         headerShown: false,
-        tabBarActiveTintColor: '#f2f2f2',
-        tabBarInactiveTintColor: '#6d6d6d',
-        tabBarActiveBackgroundColor: '#000',
+        
         tabBarAllowFontScaling: true,
         tabBarHideOnKeyboard: true,
       }}
