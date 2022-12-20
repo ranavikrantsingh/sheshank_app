@@ -4,9 +4,10 @@ import DrawerNavigator from './DrawerNavigator';
 import EarningsScereen from '../screens/EarningsScreen';
 import {Platform} from 'react-native';
 import {scale} from '../utils/Scaling';
+import {connect} from 'react-redux';
 const Tab = createBottomTabNavigator();
 
-const TabNavigator = () => {
+const TabNavigator = (props) => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -19,7 +20,7 @@ const TabNavigator = () => {
           bottom: Platform.OS === 'ios' ? scale(-2) : scale(5),
         },
         headerShown: false,
-        
+
         tabBarAllowFontScaling: true,
         tabBarHideOnKeyboard: true,
       }}
@@ -30,6 +31,7 @@ const TabNavigator = () => {
         component={DrawerNavigator}
         options={{
           tabBarLabel: 'Mail',
+          tabBarBadge: props?.emailCount
         }}
       />
       <Tab.Screen
@@ -37,11 +39,16 @@ const TabNavigator = () => {
         component={EarningsScereen}
         options={{
           tabBarLabel: 'Earnings',
-          tabBarBadge: 2,
         }}
       />
     </Tab.Navigator>
   );
 };
 
-export default TabNavigator;
+const mapStateToProps = state => {
+  return {
+    emailCount: state.appReducer.emailCount,
+  };
+};
+
+export default connect(mapStateToProps)(TabNavigator);

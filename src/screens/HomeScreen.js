@@ -10,11 +10,14 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {scale} from '../utils/Scaling';
 import MailData from '../constants/MailData';
 import {TextInput} from 'react-native-paper';
+import { setEmailCount } from '../store/actions';
+import { useDispatch } from 'react-redux';
 const HomeScreen = props => {
+  const dispatch = useDispatch();
   const isDarkMode = useColorScheme() === 'dark';
   const [mail, setMail] = useState(MailData);
   const randomColor = {
@@ -34,6 +37,16 @@ const HomeScreen = props => {
 
     props.navigation.navigate('MailDetailsScreen', data);
   };
+  const handleEmailCount = () => {
+    dispatch(setEmailCount(mail?.length));
+    console.log('====================================');
+    console.log(mail?.length);
+    console.log('====================================');
+  };
+  useEffect(() => {
+    handleEmailCount();
+  }, [])
+  
   return (
     <SafeAreaView
       style={[

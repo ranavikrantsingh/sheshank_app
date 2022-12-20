@@ -7,6 +7,7 @@ import {
     SET_IS_AUTHENTICATED,
     SET_LOGOUT,
     THEME_CHANGE,
+    SET_EMAIL_COUNT,
   } from './methods';
   
   export const setOtpToken = otpToken => dispatch => {
@@ -51,6 +52,12 @@ import {
     return {
       type: THEME_CHANGE,
       payload: mode,
+    };
+  };
+  export const setEmailCount = count => {
+    return {
+      type: SET_EMAIL_COUNT,
+      payload: count,
     };
   };
   export const logout = () => dispatch => {

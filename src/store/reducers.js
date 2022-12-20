@@ -7,6 +7,7 @@ import {
   SET_IS_AUTHENTICATED,
   SET_LOGOUT,
   THEME_CHANGE,
+  SET_EMAIL_COUNT,
 } from './methods';
 
 const initialState = {
@@ -17,6 +18,8 @@ const initialState = {
   user: {},
   isAuthenticated: false,
   mode: 'light',
+  emailCount: 0,
+
 };
 
 function appReducer(state = initialState, action) {
@@ -41,6 +44,11 @@ function appReducer(state = initialState, action) {
       return {
         ...state,
         mode: action.payload,
+      };
+    case SET_EMAIL_COUNT:
+      return {
+        ...state,
+        emailCount: action.payload,
       };
     default:
       return state;
