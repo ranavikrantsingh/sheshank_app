@@ -1,11 +1,20 @@
-import {StyleSheet, View, Text, SafeAreaView} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  SafeAreaView,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import React, {useState} from 'react';
 import {TextInput} from 'react-native-paper';
 import ButtonComponent from '../components/ButtonComponent.js';
 import {scale} from '../utils/Scaling.js';
 import {useDispatch} from 'react-redux';
-import {setMobileNumber, switchMode} from '../store/actions';
+import {setMobileNumber} from '../store/actions';
 import {toastr} from '../utils/Toastr.js';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 const LoginScreen = props => {
   const dispatch = useDispatch();
@@ -51,70 +60,77 @@ const LoginScreen = props => {
 
   return (
     <SafeAreaView style={styles?.mainContainer}>
-      <View style={styles?.margins}>
-        <View style={styles?.body}>
-          <Text style={styles.boldText}>Welcome to the app</Text>
-          <Text style={styles.mediumText}>Enter your mobile number</Text>
-          <TextInput
-            placeholder="Enter your mobile number"
-            mode="outlined"
-            keyboardType="number-pad"
-            value={mobile}
-            maxLength={10}
-            error={hasMobileError}
-            onChangeText={text => {
-              setMobile(text);
-              if (text?.length === 10) {
-                sethasMobileError(false);
-                setError('');
-              }
-            }}
-            onBlur={() => {
-              if (mobile?.length === 10) {
-                sethasMobileError(false);
-                return true;
-              } else {
-                sethasMobileError(true);
-                setError('Mobile Number is Required');
-                return false;
-              }
-            }}
-            onSubmitEditing={() => {
-              if (mobile?.length === 10) {
-                sethasMobileError(false);
-                return true;
-              } else {
-                sethasMobileError(true);
-                setError('Mobile Number is Required');
-                return false;
-              }
-            }}
-          />
-          {hasMobileError && <Text style={styles?.error}>{error}</Text>}
-          <View
-            style={{
-              marginTop: scale(20),
-            }}>
-            <ButtonComponent onPress={handleLogin} name={'Login'} />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            Keyboard.dismiss();
+          }}>
+          <View style={styles?.margins}>
+            <View style={styles?.body}>
+              <Text style={styles.boldText}>Welcome to the app</Text>
+              <Text style={styles.mediumText}>Enter your mobile number</Text>
+              <TextInput
+                placeholder="Enter your mobile number"
+                mode="outlined"
+                keyboardType="number-pad"
+                value={mobile}
+                maxLength={10}
+                error={hasMobileError}
+                onChangeText={text => {
+                  setMobile(text);
+                  if (text?.length === 10) {
+                    sethasMobileError(false);
+                    setError('');
+                  }
+                }}
+                onBlur={() => {
+                  if (mobile?.length === 10) {
+                    sethasMobileError(false);
+                    return true;
+                  } else {
+                    sethasMobileError(true);
+                    setError('Mobile Number is Required');
+                    return false;
+                  }
+                }}
+                onSubmitEditing={() => {
+                  if (mobile?.length === 10) {
+                    sethasMobileError(false);
+                    return true;
+                  } else {
+                    sethasMobileError(true);
+                    setError('Mobile Number is Required');
+                    return false;
+                  }
+                }}
+              />
+              {hasMobileError && <Text style={styles?.error}>{error}</Text>}
+              <View
+                style={{
+                  marginTop: scale(20),
+                }}>
+                <ButtonComponent onPress={handleLogin} name={'Login'} />
+              </View>
+              <View
+                style={{
+                  marginTop: scale(20),
+                }}>
+                <ButtonComponent
+                  onPress={() => {
+                    props.navigation.navigate({
+                      name: 'CreateAccount',
+                    });
+                  }}
+                  name={'Sign Up'}
+                  buttonStyle={styles?.signUpButton}
+                  textStyle={styles?.singupButtonText}
+                />
+              </View>
+            </View>
           </View>
-          <View
-            style={{
-              marginTop: scale(20),
-            }}>
-            <ButtonComponent
-              onPress={() => {
-                props.navigation.navigate({
-                  name: 'CreateAccount',
-                });
-              }
-              }
-              name={'Sign Up'}
-              buttonStyle={styles?.signUpButton}
-              textStyle={styles?.singupButtonText}
-            />
-          </View>
-        </View>
-      </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
