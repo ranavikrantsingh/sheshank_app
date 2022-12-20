@@ -3,6 +3,7 @@ export default MailData = [
     id: 1,
     name: 'Leanne Graham',
     username: 'Bret',
+    message: 'Hello how are you doing',
     email: 'Sincere@april.biz',
     address: {
       street: 'Kulas Light',
@@ -37,6 +38,7 @@ export default MailData = [
         lng: '-34.4618',
       },
     },
+    message: 'Hello kdjhfkjsdhfsdkjhfsdkjfhdskjfhdskjfhdskfjhdsfkjdsh',
     phone: '010-692-6593 x09125',
     website: 'anastasia.net',
     company: {
@@ -50,6 +52,8 @@ export default MailData = [
     name: 'Clementine Bauch',
     username: 'Samantha',
     email: 'Nathan@yesenia.net',
+    message: 'Hello kdjhfkjsdhfsdkjhfsdkjfhdskjfhdskjfhdskfjhdsfkjdsh',
+
     address: {
       street: 'Douglas Extension',
       suite: 'Suite 847',
@@ -72,6 +76,7 @@ export default MailData = [
     id: 4,
     name: 'Patricia Lebsack',
     username: 'Karianne',
+    message : 'loreum ipsum',
     email: 'Julianne.OConner@kory.org',
     address: {
       street: 'Hoeger Mall',
@@ -95,6 +100,7 @@ export default MailData = [
     id: 5,
     name: 'Chelsey Dietrich',
     username: 'Kamren',
+    message: 'Hello',
     email: 'Lucio_Hettinger@annie.ca',
     address: {
       street: 'Skiles Walks',
@@ -119,6 +125,8 @@ export default MailData = [
     name: 'Mrs. Dennis Schulist',
     username: 'Leopoldo_Corkery',
     email: 'Karley_Dach@jasper.info',
+    message: 'Hello',
+
     address: {
       street: 'Norberto Crossing',
       suite: 'Apt. 950',
@@ -142,6 +150,7 @@ export default MailData = [
     name: 'Kurtis Weissnat',
     username: 'Elwyn.Skiles',
     email: 'Telly.Hoeger@billy.biz',
+    message: 'Hello',
     address: {
       street: 'Rex Trail',
       suite: 'Suite 280',
@@ -164,6 +173,7 @@ export default MailData = [
     id: 8,
     name: 'Nicholas Runolfsdottir V',
     username: 'Maxime_Nienow',
+    message: 'Hello',
     email: 'Sherwood@rosamond.me',
     address: {
       street: 'Ellsworth Summit',
@@ -187,6 +197,7 @@ export default MailData = [
     id: 9,
     name: 'Glenna Reichert',
     username: 'Delphine',
+    message: 'Hello',
     email: 'Chaim_McDermott@dana.io',
     address: {
       street: 'Dayna Park',
@@ -211,6 +222,8 @@ export default MailData = [
     name: 'Clementina DuBuque',
     username: 'Moriah.Stanton',
     email: 'Rey.Padberg@karina.biz',
+    message: 'Hello',
+
     address: {
       street: 'Kattie Turnpike',
       suite: 'Suite 198',

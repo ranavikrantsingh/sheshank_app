@@ -63,6 +63,7 @@ const OtpScreen = props => {
           </Text>
           <TextInput
             placeholder="Enter OTP"
+            placeholderTextColor={ isDarkMode ? '#f2f2f2' : '#000'}
             mode="outlined"
             keyboardType="number-pad"
             value={otp}
@@ -74,6 +75,13 @@ const OtpScreen = props => {
               sethasOtpError(false);
             }}
             error={hasOtpError}
+            textColor={ isDarkMode ? '#f2f2f2' : '#000'}
+            theme={{
+              colors: {
+                text: isDarkMode ? '#f2f2f2' : '#000',
+                background: 'transparent',
+              },
+            }}
           />
           <Text style={styles.error}>{error}</Text>
           <ButtonComponent name="Verify" onPress={handleOtp} />

@@ -1,10 +1,12 @@
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {useColorScheme, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import {scale} from '../utils/Scaling';
 import ButtonComponent from '../components/ButtonComponent';
 import {TextInput} from 'react-native-paper';
+
 import CustomDarkModeContainerWithKeyboardAvoiding from '../components/CustomDarkModeContainerWithKeyboardAvoiding';
 const CreateAccount = () => {
+  const isDarkMode = useColorScheme() === 'dark';
   const [firstName, setFirstName] = useState('');
   const [hasFirstNameError, sethasFirstNameError] = useState(false);
   const [lastName, setLastName] = useState('');
@@ -101,14 +103,20 @@ const CreateAccount = () => {
       <View style={styles?.margins}>
         <ScrollView>
           <TextInput
-            label="First Name"
             mode="outlined"
             style={styles?.input}
             placeholder="Enter your first name"
-            placeholderTextColor="#000"
+            placeholderTextColor={ isDarkMode ? '#f2f2f2' : '#000'}
             onChangeText={text => setFirstName(text)}
             value={firstName}
             error={hasFirstNameError}
+            textColor={ isDarkMode ? '#f2f2f2' : '#000'}
+            theme={{
+              colors: {
+                text: isDarkMode ? '#f2f2f2' : '#000',
+                background: 'transparent',
+              },
+            }}
             onBlur={() => {
               if (firstName?.length > 0) {
                 sethasFirstNameError(false);
@@ -132,11 +140,17 @@ const CreateAccount = () => {
           />
           {hasFirstNameError && <Text style={styles?.error}>{error}</Text>}
           <TextInput
-            label="Last Name"
             mode="outlined"
             style={styles?.input}
             placeholder="Enter your last name"
-            placeholderTextColor="#000"
+            placeholderTextColor={ isDarkMode ? '#f2f2f2' : '#000'}
+            textColor={ isDarkMode ? '#f2f2f2' : '#000'}
+            theme={{
+              colors: {
+                text: isDarkMode ? '#f2f2f2' : '#000',
+                background: 'transparent',
+              },
+            }}
             onChangeText={text => setLastName(text)}
             value={lastName}
             error={hasLastNameError}
@@ -163,11 +177,17 @@ const CreateAccount = () => {
           />
           {hasLastNameError && <Text style={styles?.error}>{error}</Text>}
           <TextInput
-            label="Email"
             mode="outlined"
             style={styles?.input}
             placeholder="Enter your email"
-            placeholderTextColor="#000"
+            placeholderTextColor={ isDarkMode ? '#f2f2f2' : '#000'}
+            textColor={ isDarkMode ? '#f2f2f2' : '#000'}
+            theme={{
+              colors: {
+                text: isDarkMode ? '#f2f2f2' : '#000',
+                background: 'transparent',
+              },
+            }}
             onChangeText={text => setEmail(text)}
             value={email}
             error={hasEmailError}

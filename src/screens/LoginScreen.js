@@ -6,6 +6,7 @@ import {scale} from '../utils/Scaling.js';
 import {useDispatch} from 'react-redux';
 import {setMobileNumber} from '../store/actions';
 import {toastr} from '../utils/Toastr.js';
+import Colors from '../constants/Colors.js';
 import CustomDarkModeContainerWithKeyboardAvoiding from '../components/CustomDarkModeContainerWithKeyboardAvoiding.js';
 const LoginScreen = props => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -68,6 +69,7 @@ const LoginScreen = props => {
           </Text>
           <TextInput
             placeholder="Enter your mobile number"
+            placeholderTextColor={ isDarkMode ? '#f2f2f2' : '#000'}
             mode="outlined"
             style={{backgroundColor: 'transparent'}}
             keyboardType="number-pad"
@@ -101,6 +103,16 @@ const LoginScreen = props => {
                 return false;
               }
             }}
+            textColor={ isDarkMode ? '#f2f2f2' : '#000'}
+            theme={{
+              colors: {
+                text: isDarkMode ? '#f2f2f2' : '#000',
+                background: 'transparent',
+              },
+            }}
+            
+
+
           />
           {hasMobileError && <Text style={styles?.error}>{error}</Text>}
           <View

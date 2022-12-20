@@ -29,7 +29,7 @@ const TabNavigator = () => {
         name="DrawerNavigator"
         component={DrawerNavigator}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Mail',
         }}
       />
       <Tab.Screen

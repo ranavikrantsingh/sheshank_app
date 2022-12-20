@@ -16,6 +16,16 @@ import {TextInput} from 'react-native-paper';
 const HomeScreen = props => {
   const isDarkMode = useColorScheme() === 'dark';
   const [mail, setMail] = useState(MailData);
+  const randomColor = {
+    bgColor: ['#E2B43B', '#77708E', '#C76E46', '#BDE0BD', '#f26868', '#0181e3'],
+  };
+  const randomColorgenerator =
+    randomColor?.bgColor[
+      Math.floor(Math.random() * randomColor?.bgColor?.length)
+    ];
+
+  // const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+
   return (
     <SafeAreaView
       style={[
@@ -38,22 +48,51 @@ const HomeScreen = props => {
                   />
                 }
                 style={{backgroundColor: 'transparent'}}
-                label="Search by email"
+                placeholder="Search by email or name"
+                placeholderTextColor={isDarkMode ? '#f2f2f2' : '#000'}
                 mode="outlined"
                 onChangeText={text => {
                   const filteredMail = MailData.filter(item => {
-                    return item?.email?.includes(text);
+                    return (
+                      item?.email?.includes(text) &&
+                      item?.username?.includes(text)
+                    );
                   });
                   setMail(filteredMail);
                 }}
+                textColor={isDarkMode ? '#f2f2f2' : '#000'}
+                theme={{
+                  roundness: 40,
+                  colors: {
+                    text: isDarkMode ? '#f2f2f2' : '#000',
+                    background: 'transparent',
+                  },
+                }}
               />
             </View>
+            <Text style={styles.mediumText}>Inbox</Text>
+
             <FlatList
               data={mail}
               renderItem={({item}) => (
                 <View style={styles?.card}>
-                  <Text style={styles?.mediumText}>{item?.username}</Text>
-                  <Text style={styles?.mediumText}>{item?.email}</Text>
+                  <View style={styles?.row}>
+                    <View
+                      style={[
+                        styles?.contactContainer,
+                        {backgroundColor: randomColorgenerator},
+                      ]}>
+                      <Text style={styles?.whiteText}>
+                        {item?.name?.slice(0, 1)}
+                      </Text>
+                    </View>
+                    <View style={styles?.col}>
+                      <Text style={styles?.boldText}>{item?.email}</Text>
+                      <Text style={styles?.mediumText} numberOfLines={2}>
+                        {item?.message}
+                      </Text>
+                    </View>
+                  </View>
                 </View>
               )}
               onEndReachedThreshold={0.5}
@@ -87,13 +126,36 @@ const styles = StyleSheet.create({
     marginVertical: scale(5),
   },
   boldText: {
-    fontSize: scale(20),
+    fontSize: scale(15),
     fontWeight: 'bold',
-    marginVertical: scale(5),
   },
   mediumText: {
     fontSize: scale(13),
     fontWeight: 'normal',
-    marginVertical: scale(2),
+    marginVertical: scale(5),
+  },
+  card: {
+    marginVertical: scale(8),
+  },
+  contactContainer: {
+    height: scale(50),
+    width: scale(50),
+    borderRadius: scale(25),
+    backgroundColor: '#f2f2f2',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: scale(10),
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  whiteText: {
+    color: '#fff',
+    fontSize: scale(15),
+    fontWeight: 'bold',
+  },
+  col: {
+    flex: 1,
   },
 });
