@@ -6,7 +6,7 @@ import {scale} from '../utils/Scaling.js';
 import {useDispatch} from 'react-redux';
 import {setMobileNumber} from '../store/actions';
 import {toastr} from '../utils/Toastr.js';
-import Colors from '../constants/Colors.js';
+import ModalPopup from '../components/ModalPopup.js';
 import LottieView from 'lottie-react-native';
 import CustomDarkModeContainerWithKeyboardAvoiding from '../components/CustomDarkModeContainerWithKeyboardAvoiding.js';
 const LoginScreen = props => {
@@ -16,7 +16,7 @@ const LoginScreen = props => {
   const [mobile, setMobile] = useState('');
   const [error, setError] = useState('');
   const [hasMobileError, sethasMobileError] = useState(false);
-
+const [showPopup, setshowPopup] = useState(false);
   const handleValidationforLogin = data => {
     let formIsValid = true;
     if (!data?.phoneNumber) {
@@ -44,10 +44,16 @@ const LoginScreen = props => {
     let isValid = handleValidationforLogin(data);
     if (isValid.isValid) {
       dispatch(setMobileNumber(mobile));
-      props.navigation.navigate({
-        name: 'OtpScreen',
-        params: {mobile},
-      });
+      setshowPopup(true);
+      setTimeout(() => {
+        setshowPopup(false);
+        props.navigation.navigate({
+          name: 'OtpScreen',
+          params: {mobile},
+        });
+      }, 3000);
+
+      
     } else {
       toastr.showToast('Please enter valid mobile number');
     }
@@ -60,7 +66,7 @@ const LoginScreen = props => {
           <LottieView
             source={require('../assets/animations/mail.json')}
             autoPlay
-            loop
+            loop={false}
             style={{
               width: scale(100),
               height: scale(100),
@@ -148,6 +154,9 @@ const LoginScreen = props => {
             />
           </View>
         </View>
+        {
+          showPopup && <ModalPopup activeTab={0} modalVisible={showPopup} setModalVisible={setshowPopup}/>
+        }
       </View>
     </CustomDarkModeContainerWithKeyboardAvoiding>
   );

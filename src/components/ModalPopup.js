@@ -10,25 +10,30 @@ import {
 } from 'react-native';
 import React from 'react';
 import {scale} from '../utils/Scaling';
-import ButtonComponent from './ButtonComponent';
+import LottieView from 'lottie-react-native';
 const ModalPopup = props => {
   const renderView = () => {
     if (props?.activeTab === 0) {
       return (
         <View style={styles?.margins}>
-          <Text style={{fontSize: scale(20), fontWeight: 'bold'}}>
-            Modal Popup
+          
+          
+          <LottieView
+            source={require('../assets/animations/otp.json')}
+            autoPlay
+            loop
+            style={styles?.lottie}
+          />
+          <Text
+            style={{
+              fontSize: scale(20),
+              fontWeight: 'bold',
+              color: '#000',
+              textAlign: 'center',
+              marginVertical: scale(5),
+            }}>
+            OTP  has been sent to your mobile number
           </Text>
-
-          <Image
-            source={require('../assets/images/IMG_1427.jpeg')}
-            style={{width: scale(100), height: scale(100)}}
-          />
-
-          <ButtonComponent
-            name={'Close'}
-            onPress={() => props.setModalVisible(false)}
-          />
         </View>
       );
     }
@@ -124,6 +129,11 @@ const styles = StyleSheet.create({
     width: '40%',
     backgroundColor: '#F4FBFF',
   },
+  lottie: {
+    width: scale(200),
+    height: scale(150),
+    alignSelf: 'center',
+  }
 });
 
 export default ModalPopup;
