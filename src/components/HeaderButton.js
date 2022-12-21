@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     borderColor: '#0181e3',
   },
   inactiveTab: {
-    backgroundColor: '#fff',
+    backgroundColor: 'transparent',
     paddingVertical: scale(5),
     paddingHorizontal: scale(25),
     borderRadius: scale(20),
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   inactiveText: {
-    color: '#000',
+    // color: '#000',
     fontSize: scale(16),
     fontWeight: 'bold',
   },
