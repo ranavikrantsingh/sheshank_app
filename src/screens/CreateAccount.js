@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import {scale} from '../utils/Scaling';
 import ButtonComponent from '../components/ButtonComponent';
 import {TextInput} from 'react-native-paper';
-
+import ModalPopup from '../components/ModalPopup';
 import CustomDarkModeContainerWithKeyboardAvoiding from '../components/CustomDarkModeContainerWithKeyboardAvoiding';
 const CreateAccount = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -14,7 +14,7 @@ const CreateAccount = () => {
   const [email, setEmail] = useState('');
   const [hasEmailError, sethasEmailError] = useState(false);
   const [error, setError] = useState('');
-
+  const [showModal, setshowModal] = useState(false);
   const handleValidationforLogin = data => {
     let formIsValid = true;
     if (!data?.firstName) {
@@ -93,6 +93,7 @@ const CreateAccount = () => {
     let isValid = handleValidationforLogin(data);
     if (isValid.isValid) {
       console.log('Valid');
+      setshowModal(true);
     } else {
       console.log('Invalid');
     }
@@ -106,11 +107,11 @@ const CreateAccount = () => {
             mode="outlined"
             style={styles?.input}
             placeholder="Enter your first name"
-            placeholderTextColor={ isDarkMode ? '#f2f2f2' : '#000'}
+            placeholderTextColor={isDarkMode ? '#f2f2f2' : '#000'}
             onChangeText={text => setFirstName(text)}
             value={firstName}
             error={hasFirstNameError}
-            textColor={ isDarkMode ? '#f2f2f2' : '#000'}
+            textColor={isDarkMode ? '#f2f2f2' : '#000'}
             theme={{
               colors: {
                 text: isDarkMode ? '#f2f2f2' : '#000',
@@ -143,8 +144,8 @@ const CreateAccount = () => {
             mode="outlined"
             style={styles?.input}
             placeholder="Enter your last name"
-            placeholderTextColor={ isDarkMode ? '#f2f2f2' : '#000'}
-            textColor={ isDarkMode ? '#f2f2f2' : '#000'}
+            placeholderTextColor={isDarkMode ? '#f2f2f2' : '#000'}
+            textColor={isDarkMode ? '#f2f2f2' : '#000'}
             theme={{
               colors: {
                 text: isDarkMode ? '#f2f2f2' : '#000',
@@ -180,8 +181,8 @@ const CreateAccount = () => {
             mode="outlined"
             style={styles?.input}
             placeholder="Enter your email"
-            placeholderTextColor={ isDarkMode ? '#f2f2f2' : '#000'}
-            textColor={ isDarkMode ? '#f2f2f2' : '#000'}
+            placeholderTextColor={isDarkMode ? '#f2f2f2' : '#000'}
+            textColor={isDarkMode ? '#f2f2f2' : '#000'}
             theme={{
               colors: {
                 text: isDarkMode ? '#f2f2f2' : '#000',
@@ -218,6 +219,13 @@ const CreateAccount = () => {
           onPress={handleCreateAccount}
           name={'Create Account'}
         />
+        {showModal && (
+          <ModalPopup
+            activeTab={1}
+            modalVisible={showModal}
+            setModalVisible={setshowModal}
+          />
+        )}
       </View>
     </CustomDarkModeContainerWithKeyboardAvoiding>
   );

@@ -4,7 +4,7 @@ import {
   Modal,
   TouchableOpacity,
   StatusBar,
-  Image,
+  useColorScheme,
   StyleSheet,
   TouchableWithoutFeedback,
 } from 'react-native';
@@ -12,12 +12,11 @@ import React from 'react';
 import {scale} from '../utils/Scaling';
 import LottieView from 'lottie-react-native';
 const ModalPopup = props => {
+  const isDarkMode = useColorScheme() === 'dark';
   const renderView = () => {
     if (props?.activeTab === 0) {
       return (
         <View style={styles?.margins}>
-          
-          
           <LottieView
             source={require('../assets/animations/otp.json')}
             autoPlay
@@ -28,11 +27,33 @@ const ModalPopup = props => {
             style={{
               fontSize: scale(20),
               fontWeight: 'bold',
-              color: '#000',
+              color: isDarkMode ? '#fff' : '#000',
               textAlign: 'center',
               marginVertical: scale(5),
             }}>
-            OTP  has been sent to your mobile number
+            OTP has been sent to your mobile number
+          </Text>
+        </View>
+      );
+    }
+    if (props?.activeTab === 1) {
+      return (
+        <View style={styles?.margins}>
+          <LottieView
+            source={require('../assets/animations/lurkingCat.json')}
+            autoPlay
+            loop
+            style={styles?.lottie}
+          />
+          <Text
+            style={{
+              fontSize: scale(20),
+              fontWeight: 'bold',
+              color: isDarkMode ? '#fff' : '#000',
+              textAlign: 'center',
+              marginVertical: scale(5),
+            }}>
+            Account Created successfully
           </Text>
         </View>
       );
@@ -81,7 +102,13 @@ const ModalPopup = props => {
                 </View>
               </TouchableOpacity>
             </View>
-            <View style={styles.modalView}>{renderView()}</View>
+            <View
+              style={[
+                styles.modalView,
+                {backgroundColor: isDarkMode ? '#121212' : '#fff'},
+              ]}>
+              {renderView()}
+            </View>
           </View>
         </TouchableWithoutFeedback>
       </Modal>
@@ -133,7 +160,7 @@ const styles = StyleSheet.create({
     width: scale(200),
     height: scale(150),
     alignSelf: 'center',
-  }
+  },
 });
 
 export default ModalPopup;

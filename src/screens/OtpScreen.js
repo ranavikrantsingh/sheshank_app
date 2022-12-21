@@ -6,6 +6,7 @@ import {scale} from '../utils/Scaling.js';
 import {toastr} from '../utils/Toastr.js';
 import {setIsAuthenticated} from '../store/actions.js';
 import {useDispatch} from 'react-redux';
+import LottieView from 'lottie-react-native';
 import CustomDarkModeContainerWithKeyboardAvoiding from '../components/CustomDarkModeContainerWithKeyboardAvoiding.js';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 const OtpScreen = props => {
@@ -54,6 +55,12 @@ const OtpScreen = props => {
     <CustomDarkModeContainerWithKeyboardAvoiding>
       <View style={styles?.margins}>
         <View style={styles?.body}>
+          <LottieView
+            source={require('../assets/animations/catNoir.json')}
+            autoPlay
+            loop={false}
+            style={{height: scale(100), width: scale(100)}}
+          />
           <Text
             style={[styles.boldText, {color: isDarkMode ? '#fff' : '#000'}]}>
             Enter OTP
