@@ -7,6 +7,7 @@ import {useDispatch} from 'react-redux';
 import {setMobileNumber} from '../store/actions';
 import {toastr} from '../utils/Toastr.js';
 import Colors from '../constants/Colors.js';
+import LottieView from 'lottie-react-native';
 import CustomDarkModeContainerWithKeyboardAvoiding from '../components/CustomDarkModeContainerWithKeyboardAvoiding.js';
 const LoginScreen = props => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -56,6 +57,16 @@ const LoginScreen = props => {
     <CustomDarkModeContainerWithKeyboardAvoiding>
       <View style={styles?.margins}>
         <View style={styles?.body}>
+          <LottieView
+            source={require('../assets/animations/mail.json')}
+            autoPlay
+            loop
+            style={{
+              width: scale(100),
+              height: scale(100),
+              alignSelf: 'center',
+            }}
+          />
           <Text
             style={[styles.boldText, {color: isDarkMode ? '#f2f2f2' : '#000'}]}>
             Welcome to the app
