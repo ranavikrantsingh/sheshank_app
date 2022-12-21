@@ -8,9 +8,9 @@ import {
 } from '@react-navigation/drawer';
 import Colors from '../../constants/Colors';
 import {logout} from '../../store/actions';
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 const CustomDrawerComponent = props => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const handleLogout = () => {
     Alert.alert(
       'Logout',
@@ -35,22 +35,20 @@ const CustomDrawerComponent = props => {
         {/* <DrawerItemList {...props} /> */}
         <View style={{marginTop: scale(10)}}>
           <DrawerItem
-            label="My Profile"
+            label="Inbox"
             activeTintColor={Colors.red}
             activeBackgroundColor="white"
             inactiveTintColor="white"
             inactiveBackgroundColor="#000"
             style={{backgroundColor: 'transparent', marginTop: '0%'}}
-            //   onPress={() => props.navigation.navigate('Profile')}
           />
           <DrawerItem
-            label="My Orders"
+            label="Sent"
             activeTintColor={Colors.red}
             activeBackgroundColor="white"
             inactiveTintColor="white"
             inactiveBackgroundColor="transparent"
             style={{backgroundColor: 'transparent', marginTop: '0%'}}
-            //   onPress={() => props.navigation.navigate('Orders')}
           />
         </View>
       </DrawerContentScrollView>
@@ -82,7 +80,6 @@ const styles = StyleSheet.create({
     borderColor: '#fFF',
     borderWidth: scale(1),
     borderRadius: scale(100),
-    // transform: [{rotate: '90deg'}],
   },
   bg: {
     height: scale(95),
