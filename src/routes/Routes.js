@@ -23,7 +23,9 @@ export default function Routes() {
         <Stack.Screen
           name="MailDetailsScreen"
           component={MailDetailsScreen}
-          options={{headerShown: false}}
+          options={{
+            title: 'Mail Details',
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

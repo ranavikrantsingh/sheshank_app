@@ -1,7 +1,7 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import DrawerNavigator from './DrawerNavigator';
-import EarningsScereen from '../screens/EarningsScreen';
+import MeetScreen from '../screens/MeetScreen';
 import {Platform} from 'react-native';
 import {scale} from '../utils/Scaling';
 import {connect} from 'react-redux';
@@ -35,10 +35,10 @@ const TabNavigator = (props) => {
         }}
       />
       <Tab.Screen
-        name="EarningsScereen"
-        component={EarningsScereen}
+        name="MeetScreen"
+        component={MeetScreen}
         options={{
-          tabBarLabel: 'Earnings',
+          tabBarLabel: 'Meet',
         }}
       />
     </Tab.Navigator>

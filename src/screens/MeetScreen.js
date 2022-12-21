@@ -4,11 +4,11 @@ import CustomDarkModeContainerWithKeyboardAvoiding from '../components/CustomDar
 
 const EarningsScreen = () => {
   return (
-   <CustomDarkModeContainerWithKeyboardAvoiding>
+    <CustomDarkModeContainerWithKeyboardAvoiding>
       <View>
         <Text>Earnings Screen</Text>
       </View>
-   </CustomDarkModeContainerWithKeyboardAvoiding>
+    </CustomDarkModeContainerWithKeyboardAvoiding>
   );
 };
 
