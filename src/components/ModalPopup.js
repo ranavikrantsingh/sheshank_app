@@ -58,6 +58,28 @@ const ModalPopup = props => {
         </View>
       );
     }
+    if (props?.activeTab === 2) {
+      return (
+        <View style={styles?.margins}>
+          <LottieView
+            source={require('../assets/animations/Verified.json')}
+            autoPlay
+            loop={false}
+            style={styles?.lottie}
+          />
+          <Text
+            style={{
+              fontSize: scale(20),
+              fontWeight: 'bold',
+              color: isDarkMode ? '#fff' : '#000',
+              textAlign: 'center',
+              marginVertical: scale(5),
+            }}>
+            OTP Verified successfully
+          </Text>
+        </View>
+      );
+    }
   };
   return (
     <View style={styles.centeredView}>

@@ -7,8 +7,9 @@ import {toastr} from '../utils/Toastr.js';
 import {setIsAuthenticated} from '../store/actions.js';
 import {useDispatch} from 'react-redux';
 import LottieView from 'lottie-react-native';
+import ModalPopup from '../components/ModalPopup.js';
 import CustomDarkModeContainerWithKeyboardAvoiding from '../components/CustomDarkModeContainerWithKeyboardAvoiding.js';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 const OtpScreen = props => {
   const isDarkMode = useColorScheme() === 'dark';
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const OtpScreen = props => {
   const [error, setError] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [hasOtpError, sethasOtpError] = useState(false);
+  const [showModal, setshowModal] = useState(false);
   var replaced = mobile.replace(/^(.{2}).*(.{3}).*(.{4})$/, `$1****$3`);
 
   const handleValidationforOtp = data => {
@@ -45,7 +47,13 @@ const OtpScreen = props => {
     };
     let isValid = handleValidationforOtp(data);
     if (isValid.isValid) {
-      dispatch(setIsAuthenticated(true));
+      setshowModal(true);
+
+      setTimeout(() => {
+        setshowModal(false);
+
+        dispatch(setIsAuthenticated(true));
+      }, 2000);
     } else {
       toastr.showToast('Please enter valid OTP');
     }
@@ -71,9 +79,8 @@ const OtpScreen = props => {
           </Text>
           <TextInput
             placeholder="Enter OTP"
-            placeholderTextColor={ isDarkMode ? '#f2f2f2' : '#000'}
+            placeholderTextColor={isDarkMode ? '#f2f2f2' : '#000'}
             secureTextEntry={secureTextEntry}
-
             mode="outlined"
             keyboardType="number-pad"
             value={otp}
@@ -86,28 +93,34 @@ const OtpScreen = props => {
             }}
             right={
               <TextInput.Icon
-              name={() => (
-                <TouchableOpacity>
-                  <View>
-                  {secureTextEntry ? (
-                    <Text style ={{
-                      fontSize: scale(15),
-                      color: isDarkMode ? '#f2f2f2' : '#000'
-                    }}>Show</Text>
-                  ):
-                    (<Text style ={{
-                      fontSize: scale(15),
-                      color: isDarkMode ? '#f2f2f2' : '#000'
-                    }}>Hide</Text>)}
-                  </View>
-                </TouchableOpacity>
-              )}
-
+                name={() => (
+                  <TouchableOpacity>
+                    <View>
+                      {secureTextEntry ? (
+                        <Text
+                          style={{
+                            fontSize: scale(15),
+                            color: isDarkMode ? '#f2f2f2' : '#000',
+                          }}>
+                          Show
+                        </Text>
+                      ) : (
+                        <Text
+                          style={{
+                            fontSize: scale(15),
+                            color: isDarkMode ? '#f2f2f2' : '#000',
+                          }}>
+                          Hide
+                        </Text>
+                      )}
+                    </View>
+                  </TouchableOpacity>
+                )}
                 onPress={() => setSecureTextEntry(!secureTextEntry)}
               />
             }
             error={hasOtpError}
-            textColor={ isDarkMode ? '#f2f2f2' : '#000'}
+            textColor={isDarkMode ? '#f2f2f2' : '#000'}
             theme={{
               colors: {
                 text: isDarkMode ? '#f2f2f2' : '#000',
@@ -118,6 +131,13 @@ const OtpScreen = props => {
           <Text style={styles.error}>{error}</Text>
           <ButtonComponent name="Verify" onPress={handleOtp} />
         </View>
+        {showModal && (
+          <ModalPopup
+            activeTab={2}
+            modalVisible={showModal}
+            setModalVisible={setshowModal}
+          />
+        )}
       </View>
     </CustomDarkModeContainerWithKeyboardAvoiding>
   );
