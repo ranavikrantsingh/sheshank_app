@@ -10,16 +10,21 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {scale} from '../utils/Scaling';
 import MailData from '../constants/MailData';
 import {TextInput} from 'react-native-paper';
-import { setEmailCount } from '../store/actions';
-import { useDispatch } from 'react-redux';
+import {setEmailCount} from '../store/actions';
+import {useDispatch} from 'react-redux';
+import axios from 'axios';
+import axiosCaller from '../utils/axiosCaller';
+import callApi from '../utils/apiCaller';
+import Preloader from '../components/Preloader';
 const HomeScreen = props => {
   const dispatch = useDispatch();
   const isDarkMode = useColorScheme() === 'dark';
-  const [mail, setMail] = useState(MailData);
+  const [mail, setMail] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const randomColor = {
     bgColor: ['#E2B43B', '#77708E', '#C76E46', '#BDE0BD', '#f26868', '#0181e3'],
   };
@@ -30,6 +35,91 @@ const HomeScreen = props => {
 
   // const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
 
+  // const handleMailData = async () => {
+  //   setIsLoading(true)
+  //   try {
+  //     const response = await fetch('https://jsonplaceholder.typicode.com/users');
+  //     const data = await response.json();
+  //     setMail(data);
+  //     setIsLoading(false)
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   finally{
+  //     setIsLoading(false)
+  //   }
+  // };
+
+  // const handleMailData = async () => {
+  //   setIsLoading(true);
+  //   try {
+  //     const response = await callApi('users');
+  //     const data = await response;
+  //     setMail(data);
+  //     setIsLoading(false);
+  //   }
+  //   catch (error) {
+  //     console.log(error);
+  //   }
+  //   finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  const handleMailData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axiosCaller('users');
+      const data = await response;
+      setMail(data);
+      setIsLoading(false);
+    }
+    catch (error) {
+      console.log(error);
+    }
+  };
+
+  // const postMailData = async () => {
+  //   setIsLoading(true)
+  //   try {
+  //     const response = await axios.post('https://jsonplaceholder.typicode.com/users', {
+  //       name: 'John Doe',
+  //       username
+  //     });
+  //     const data = await response.data;
+  //     setMail(data);
+  //     setIsLoading(false)
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   finally{
+  //     setIsLoading(false)
+  //   }
+  // };
+  // const postMailData = async () => {
+  //   setIsLoading(true)
+  //   try {
+  //     const response = await fetch('https://jsonplaceholder.typicode.com/users', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         name: 'John Doe',
+  //         username
+  //       }),
+  //     });
+  //     const data = await response.json();
+  //     setMail(data);
+  //     setIsLoading(false)
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   finally{
+  //     setIsLoading(false)
+  //   }
+  // };
+
   const handleNavigation = item => {
     const data = {
       data: item,
@@ -39,94 +129,100 @@ const HomeScreen = props => {
   };
   const handleEmailCount = () => {
     dispatch(setEmailCount(mail?.length));
-    console.log('====================================');
-    console.log(mail?.length);
-    console.log('====================================');
   };
   useEffect(() => {
     handleEmailCount();
-  }, [])
-  
+    handleMailData();
+  }, []);
+
+  console.log('====================================');
+  console.log(mail);
+  console.log('====================================');
+
   return (
     <SafeAreaView
       style={[
         styles?.mainContainer,
         {backgroundColor: isDarkMode ? '#121212' : '#fff'},
       ]}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            Keyboard.dismiss();
-          }}>
-          <View style={styles?.margins}>
-            <View>
-              <TextInput
-                left={
-                  <TextInput.Icon
-                    name="magnify"
-                    onPress={() => props.navigation.toggleDrawer()}
-                  />
-                }
-                style={{backgroundColor: 'transparent'}}
-                placeholder="Search by email or name"
-                placeholderTextColor={isDarkMode ? '#f2f2f2' : '#000'}
-                mode="outlined"
-                onChangeText={text => {
-                  const filteredMail = MailData.filter(item => {
-                    return (
-                      item?.email?.includes(text) &&
-                      item?.username?.includes(text)
-                    );
-                  });
-                  setMail(filteredMail);
-                }}
-                textColor={isDarkMode ? '#f2f2f2' : '#000'}
-                theme={{
-                  roundness: 40,
-                  colors: {
-                    text: isDarkMode ? '#f2f2f2' : '#000',
-                    background: 'transparent',
-                  },
+      {isLoading ? (
+        <Preloader />
+      ) : (
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              Keyboard.dismiss();
+            }}>
+            <View style={styles?.margins}>
+              <View>
+                <TextInput
+                  left={
+                    <TextInput.Icon
+                      name="magnify"
+                      onPress={() => props.navigation.toggleDrawer()}
+                    />
+                  }
+                  style={{backgroundColor: 'transparent'}}
+                  placeholder="Search by email or name"
+                  placeholderTextColor={isDarkMode ? '#f2f2f2' : '#000'}
+                  mode="outlined"
+                  onChangeText={text => {
+                    const filteredMail = MailData.filter(item => {
+                      return (
+                        item?.email?.includes(text) &&
+                        item?.username?.includes(text)
+                      );
+                    });
+                    setMail(filteredMail);
+                  }}
+                  textColor={isDarkMode ? '#f2f2f2' : '#000'}
+                  theme={{
+                    roundness: 40,
+                    colors: {
+                      text: isDarkMode ? '#f2f2f2' : '#000',
+                      background: 'transparent',
+                    },
+                  }}
+                />
+              </View>
+              <Text style={styles.mediumText}>Inbox</Text>
+
+              <FlatList
+                data={mail}
+                renderItem={({item}) => (
+                  <TouchableOpacity onPress={() => handleNavigation(item)}>
+                    <View style={styles?.card}>
+                      <View style={styles?.row}>
+                        <View
+                          style={[
+                            styles?.contactContainer,
+                            {backgroundColor: randomColorgenerator},
+                          ]}>
+                          <Text style={styles?.whiteText}>
+                            {item?.name?.slice(0, 1)}
+                          </Text>
+                        </View>
+                        <View style={styles?.col}>
+                          <Text style={styles?.boldText}>{item?.name}</Text>
+                          <Text style={styles?.mediumText} numberOfLines={2}>
+                            {item?.message}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                )}
+                onEndReachedThreshold={0.5}
+                keyExtractor={item => item?.name}
+                onEndReached={() => {
+                  console.log('end reached');
                 }}
               />
             </View>
-            <Text style={styles.mediumText}>Inbox</Text>
-
-            <FlatList
-              data={mail}
-              renderItem={({item}) => (
-                <TouchableOpacity onPress={() => handleNavigation(item)}>
-                  <View style={styles?.card}>
-                    <View style={styles?.row}>
-                      <View
-                        style={[
-                          styles?.contactContainer,
-                          {backgroundColor: randomColorgenerator},
-                        ]}>
-                        <Text style={styles?.whiteText}>
-                          {item?.name?.slice(0, 1)}
-                        </Text>
-                      </View>
-                      <View style={styles?.col}>
-                        <Text style={styles?.boldText}>{item?.name}</Text>
-                        <Text style={styles?.mediumText} numberOfLines={2}>
-                          {item?.message}
-                        </Text>
-                      </View>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              )}
-              onEndReachedThreshold={0.5}
-              keyExtractor={item => item?.name}
-              onEndReached={() => {
-                console.log('end reached');
-              }}
-            />
-          </View>
-        </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
+      )}
     </SafeAreaView>
   );
 };
