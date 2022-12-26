@@ -67,12 +67,10 @@ const HomeScreen = props => {
   // };
 
   const handleMailData = () => {
-    callApi().then(response => {
-      if (response?.status === 200) {
-        setMail(response?.data);
+    callApi(`users`,'get').then(response => {
+      if (response) {
+        setMail(response);
         setIsLoading(false);
-      } else if (response?.status === 404) {
-        console.log('404');
       }
     });
   };
