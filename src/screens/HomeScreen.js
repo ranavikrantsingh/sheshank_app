@@ -66,18 +66,28 @@ const HomeScreen = props => {
   //   }
   // };
 
-  const handleMailData = async () => {
-    setIsLoading(true);
-    try {
-      const response = await axiosCaller('users');
-      const data = await response;
-      setMail(data);
-      setIsLoading(false);
-    }
-    catch (error) {
-      console.log(error);
-    }
+  const handleMailData = () => {
+    callApi().then(response => {
+      if (response?.status === 200) {
+        setMail(response?.data);
+        setIsLoading(false);
+      } else if (response?.status === 404) {
+        console.log('404');
+      }
+    });
   };
+  // const handleMailData = async () => {
+  //   setIsLoading(true);
+  //   try {
+  //     const response = await axiosCaller('users');
+  //     const data = await response;
+  //     setMail(data);
+  //     setIsLoading(false);
+  //   }
+  //   catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   // const postMailData = async () => {
   //   setIsLoading(true)
