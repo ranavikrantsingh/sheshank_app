@@ -67,12 +67,17 @@ const HomeScreen = props => {
   // };
 
   const handleMailData = () => {
+    setIsLoading(true);
     callApi(`users`,'get').then(response => {
       if (response) {
         setMail(response);
         setIsLoading(false);
       }
-    });
+    }).catch(error => {
+      console.log(error);
+    }).finally(() => {
+      setIsLoading(false);
+    })
   };
   // const handleMailData = async () => {
   //   setIsLoading(true);
